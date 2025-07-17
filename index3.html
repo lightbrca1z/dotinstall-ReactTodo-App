@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My React App</title>
+  <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="container"></div>
+  
+  <script type="text/babel">
+    'use strict';
+
+    const Menu = (props) => {  
+      return (
+        <>
+        <li>
+          <button onClick={() => props.onDecrease(props.id)}>-</button>
+          <button onClick={() => props.onIncrease(props.id)}>+</button>
+          {props.name}({props.price}円 × {props.count}個)
+        </li>
+        </>
+      )
+    }
+    const App = () => {
+      const [items, setItems] = React.useState([
+        {id: 0, name: "牛丼", price: 400, count: 0},
+        {id: 1, name: "カレー", price: 500, count: 0},
+        {id: 2, name: "サラダ", price: 300, count: 0},
+      ]);
+
+      const handleIncrease = (id) => {
+        setItems(items.map(item => 
+          item.id === id ? {...item, count: item.count + 1} : item
+        ));
+      };
+
+      const handleDecrease = (id) => {
+        setItems(items.map(item => 
+          item.id === id && item.count > 0 ? {...item, count: item.count - 1} : item
+        ));
+      };
+
+      const total = items.reduce((sum, item) => sum + (item.price * item.count), 0);
+
+      const menuItems = items.map((item) => {
+        return <Menu 
+          key={item.id} 
+          id={item.id}
+          name={item.name} 
+          price={item.price}
+          count={item.count}
+          onIncrease={handleIncrease}
+          onDecrease={handleDecrease}
+        />
+      });
+      return (
+        <>
+          <h1>メニュー</h1>
+          <ul className="menus">
+            {menuItems}
+          </ul>
+          <p>合計:{total}円</p>
+        </>     
+      );
+    };
+
+    const container = document.querySelector('#container');
+    const root = ReactDOM.createRoot(container);
+    root.render(<App />);
+  </script> 
+</body>
+</html>
