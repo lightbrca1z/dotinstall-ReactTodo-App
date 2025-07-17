@@ -7,7 +7,7 @@
   <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style2.css">
 </head>
 <body>
   <div id="container"></div>
@@ -19,8 +19,8 @@
       return (
         <>
         <li>
-          <button onClick={() => props.onDecrease(props.id)}>-</button>
-          <button onClick={() => props.onIncrease(props.id)}>+</button>
+          <button class="menus2" onClick={() => props.onDecrease(props.id)}>-</button>
+          <button class="menus2" onClick={() => props.onIncrease(props.id)}>+</button>
           {props.name}({props.price}円 × {props.count}個)
         </li>
         </>
